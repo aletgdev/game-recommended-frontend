@@ -72,44 +72,44 @@ export default function Status() {
 
   const services = [
     {
-      name: 'API Backend (FastAPI)',
-      type: 'Servidor Principal',
+      name: 'Motor Principal de Análisis',
+      type: 'Servidor Central',
       status: statusData.status,
       latency: statusData.latency ? `${statusData.latency} ms` : '---',
       icon: <Server className="size-5 text-accent" />,
-      description: 'API REST asíncrona de alto rendimiento que orquestra el procesamiento.',
+      description: 'Servicio central encargado de procesar y coordinar las peticiones en tiempo real.',
     },
     {
-      name: 'Steam Web API (Akamai CDN)',
-      type: 'Proveedor Externo',
+      name: 'Red de Datos de Steam',
+      type: 'Servidor Externo',
       status: 'online',
       latency: '~45 ms',
       icon: <Globe className="size-5 text-positive" />,
-      description: 'Extracción de opiniones públicas recientes y fichas de metadatos.',
+      description: 'Extracción de opiniones públicas recientes y fichas de títulos.',
     },
     {
-      name: 'Clasificador NLP (TF-IDF + Naive Bayes)',
-      type: 'Modelo Machine Learning',
+      name: 'Modelo de Inteligencia Artificial',
+      type: 'Motor de Sentimiento',
       status: 'online',
       latency: '< 10 ms',
       icon: <Cpu className="size-5 text-violet-400" />,
-      description: 'Modelo entrenado para inferir sentimiento semántico en español.',
+      description: 'Algoritmo calibrado para interpretar elogios, críticas y matices en español.',
     },
     {
-      name: 'Motor RAG & Groq LLM',
-      type: 'Agente Semántico IA',
+      name: 'Motor de Recomendaciones',
+      type: 'Asistente de Juegos',
       status: 'online',
       latency: '~120 ms',
       icon: <Zap className="size-5 text-warn" />,
-      description: 'Búsqueda semántica vectorizada y generación conversacional.',
+      description: 'Búsqueda por lenguaje natural y síntesis conversacional.',
     },
     {
-      name: 'Caché en Memoria & Rate Limiting',
+      name: 'Sistema de Aceleración y Caché',
       type: 'Infraestructura',
       status: 'online',
       latency: '< 1 ms',
       icon: <Database className="size-5 text-accent-2" />,
-      description: 'Caché con expiración TTL de 30 minutos y protección anti-abuso por IP.',
+      description: 'Almacenamiento temporal de alta velocidad para respuestas instantáneas.',
     },
   ];
 
@@ -147,9 +147,9 @@ export default function Status() {
     <>
       <SeoHead
         title="Estado del Servicio e Infraestructura"
-        description="Monitor en tiempo real de la disponibilidad de la API FastAPI, motor NLP, recomendador RAG con Groq LLM y CDN de Steam."
+        description="Monitor en tiempo real de la disponibilidad del motor de análisis, la velocidad de respuesta y la conexión con Steam."
         canonicalPath="/estado"
-        keywords={['Estado del Servicio', 'Status Steam AI', 'FastAPI Uptime', 'Salud del Backend']}
+        keywords={['Estado del Servicio', 'Disponibilidad Steam AI', 'Tiempo de respuesta']}
         jsonLd={breadcrumbLd}
       />
 
@@ -160,7 +160,7 @@ export default function Status() {
 
           <div className="relative inline-flex items-center gap-2 bg-surface border border-line text-accent text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm">
             <Radio className="size-4 text-accent animate-pulse" />
-            <span>Telemetría de Infraestructura en Tiempo Real</span>
+            <span>Disponibilidad del Servicio en Tiempo Real</span>
           </div>
 
           <h1 className="relative text-3xl sm:text-5xl font-display font-black tracking-tight text-ink">
@@ -191,7 +191,7 @@ export default function Status() {
         <section className="space-y-4">
           <h3 className="text-xs font-display font-bold text-ink-soft uppercase tracking-wider px-1 flex items-center gap-2">
             <ShieldCheck className="size-4 text-accent" />
-            <span>Módulos y Dependencias del Sistema</span>
+            <span>Componentes del Servicio</span>
           </h3>
 
           <div className="grid grid-cols-1 gap-3.5">

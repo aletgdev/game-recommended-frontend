@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Search,
   CloudDownload,
@@ -8,6 +9,7 @@ import {
   HelpCircle,
   Zap,
   ShieldCheck,
+  ChevronDown,
 } from 'lucide-react';
 import SeoHead from './SeoHead';
 import { getBreadcrumbJsonLd, getFaqJsonLd } from '../services/seo/seoService';
@@ -16,79 +18,85 @@ const steps = [
   {
     num: '01',
     icon: <Search className="size-5 text-accent" />,
-    title: 'Búsqueda e Identificación de Juego',
+    title: 'Búsqueda e Identificación del Juego',
     description:
-      'Escribes el título del juego, introduces su AppID o pegas la URL oficial de la tienda de Steam. El cliente frontend envía la solicitud al backend FastAPI de alta velocidad.',
-    tech: 'React · Vite · Router v7',
+      'Introduces el título comercial, el AppID o la URL oficial de la tienda de Steam. El sistema valida el juego y localiza su ficha oficial al instante.',
+    tech: 'Búsqueda en Tiempo Real',
   },
   {
     num: '02',
     icon: <CloudDownload className="size-5 text-positive" />,
-    title: 'Extracción de Reseñas en Español',
+    title: 'Extracción de Opiniones en Español',
     description:
-      'FastAPI consulta la API oficial de Steam recuperando las opiniones más recientes escritas específicamente en castellano para garantizar el análisis del mercado hispanohablante.',
-    tech: 'FastAPI · Steam Web API',
+      'El sistema consulta la comunidad de Steam y recopila las opiniones públicas más recientes escritas específicamente en español para analizar la experiencia de los jugadores hispanohablantes.',
+    tech: 'Conexión con Steam',
   },
   {
     num: '03',
     icon: <Filter className="size-5 text-warn" />,
-    title: 'Limpieza de Texto (NLP Pipeline)',
+    title: 'Filtrado de Ruido y Limpieza de Texto',
     description:
-      'Se procesa el texto mediante expresiones regulares eliminando hashtags, emojis, enlaces web, caracteres nulos y ruido de sintaxis, normalizando todo a minúsculas.',
-    tech: 'Python · NLTK · Regex',
+      'Se eliminan caracteres repetitivos, enlaces, emoticonos y textos vacíos para aislar el vocabulario auténtico, los argumentos de los jugadores y sus valoraciones sinceras.',
+    tech: 'Procesamiento de Lenguaje Natural',
   },
   {
     num: '04',
-    icon: <Cpu className="size-5 text-violet-400" />,
-    title: 'Clasificación Multinomial Naive Bayes',
+    icon: <Cpu className="size-5 text-accent-2" />,
+    title: 'Evaluación Semántica de Sentimiento',
     description:
-      'El vectorizador TF-IDF convierte palabras en frecuencias ponderadas por relevancia. El modelo clasificador predice si cada opinión es Positiva o Negativa según su semántica real.',
-    tech: 'Naive Bayes · TF-IDF · Scikit-Learn',
+      'El modelo de Inteligencia Artificial evalúa el tono, la emoción y el contexto de cada opinión para determinar si la experiencia ha sido genuinamente Positiva o Negativa, distinguiendo ironías y quejas técnicas.',
+    tech: 'Inteligencia Artificial',
   },
   {
     num: '05',
-    icon: <BarChart3 className="size-5 text-accent-2" />,
-    title: 'Veredicto e Informe Táctico',
+    icon: <BarChart3 className="size-5 text-positive" />,
+    title: 'Veredicto Claro y Resumen Comunitario',
     description:
-      'Se calcula el ratio de aprobación ponderado y se asigna el veredicto: <strong className="text-ink">Extremadamente Recomendado</strong> (≥ 80%), <strong className="text-ink">Recomendado</strong> (≥ 60%), <strong className="text-ink">Mixto</strong> (≥ 40%) o <strong className="text-ink">No Recomendado</strong> (&lt; 40%).',
-    tech: 'FastAPI · JSON Response',
+      'Se calcula el porcentaje de aprobación real y se emite un veredicto transparente: <strong class="text-ink">Extremadamente Recomendado</strong> (≥ 80%), <strong class="text-ink">Recomendado</strong> (≥ 60%), <strong class="text-ink">Mixto</strong> (≥ 40%) o <strong class="text-ink">No Recomendado</strong> (&lt; 40%), acompañado de un desglose con lo mejor y lo peor del juego.',
+    tech: 'Informe Comunitario',
   },
 ];
 
 const faqs = [
   {
-    question: '¿Por qué es mejor este análisis que la nota global de Steam?',
+    question: '¿Por qué es más certero este análisis que el porcentaje de Steam?',
     answer:
-      'Steam sólo cuenta los clics positivos/negativos que pueden estar sesgados por review bombing o campañas externas. Nuestro modelo examina el contenido semántico real de las reseñas en español para detectar ironías y desglosar opiniones concretas.',
+      'Steam sólo cuenta los clics binarios sí/no que suelen estar distorsionados por campañas externas, review-bombing o votos irónicos. Nuestro modelo analiza el contenido semántico y los argumentos reales expresados por los jugadores en español.',
   },
   {
-    question: '¿Qué idiomas admite el clasificador NLP?',
+    question: '¿Qué idioma procesa el motor de análisis?',
     answer:
-      'Actualmente el modelo NLP de análisis de sentimiento está optimizado específicamente para opiniones en español. La búsqueda de juegos RAG también traduce automáticamente consultas del español al inglés si es necesario.',
+      'Está calibrado y optimizado para opiniones redactadas en castellano, reconociendo giros lingüísticos, quejas habituales de rendimiento y expresiones propias de la comunidad hispana.',
   },
   {
-    question: '¿Con qué frecuencia se actualiza la información?',
+    question: '¿Con qué frecuencia se actualizan los datos de cada juego?',
     answer:
-      'Las consultas extraen las opiniones más recientes directamente de la API de Steam en tiempo real, respaldadas por un sistema de caché de 30 minutos para maximizar el rendimiento.',
+      'Cada análisis consulta la comunidad de Steam en tiempo real para ofrecer la fotografía más actual de la opinión de los jugadores.',
   },
   {
-    question: '¿Se recopilan mis datos personales al navegar o buscar en la web?',
+    question: '¿Se recopila información personal de los visitantes?',
     answer:
-      'No. Este sitio web no recopila, almacena ni procesa ningún dato personal. No existen cuentas de usuario, formularios de registro ni cookies de seguimiento o analítica de terceros.',
+      'No. No almacenamos cookies de rastreo, no hay cuentas de usuario ni registro obligatorio. Es una herramienta libre de recopilación de datos privados.',
   },
   {
     question: '¿Cómo funcionan los enlaces a tiendas de videojuegos (Instant Gaming, G2A)?',
     answer:
-      'Los enlaces a tiendas digitales contienen parámetros de afiliación (conforme al Art. 20 de la LSSI-CE). Si decides comprar un juego a través de estos enlaces, el proyecto puede recibir una comisión de afiliado que contribuye al mantenimiento del servicio sin coste adicional para ti.',
+      'Los botones de compra contienen parámetros de afiliado conformes al Art. 20 de la LSSI-CE. Si decides adquirir una clave mediante ellos, el proyecto recibe una pequeña comisión que financia los servidores sin ningún coste extra para ti.',
   },
   {
-    question: '¿Cómo puedo incluir el badge del veredicto en mi GitHub README?',
+    question: '¿Cómo puedo incrustar la insignia en mi repositorio de GitHub?',
     answer:
-      'Al realizar cualquier análisis de juego, la plataforma genera automáticamente una URL SVG y un fragmento Markdown listo para copiar y pegar en el archivo README.md de tus repositorios.',
+      'Cada análisis genera automáticamente un fragmento en formato Markdown con una imagen interactiva, listo para copiar y pegar en el archivo README.md de cualquier proyecto.',
   },
 ];
 
 export default function HowItWorks() {
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const toggleFaq = (index) => {
+    setOpenFaq((prev) => (prev === index ? null : index));
+  };
+
   const breadcrumbLd = getBreadcrumbJsonLd([
     { name: '¿Cómo funciona?', path: '/como-funciona' },
   ]);
@@ -98,51 +106,70 @@ export default function HowItWorks() {
   return (
     <>
       <SeoHead
-        title="¿Cómo Funciona el Motor NLP de Steam?"
-        description="Conoce el pipeline técnico de Inteligencia Artificial para análisis de sentimiento en opiniones de Steam: Extracción API, Limpieza Regex, TF-IDF y Clasificación Naive Bayes."
+        title="¿Cómo Funciona el Motor de Análisis de Steam?"
+        description="Conoce el proceso de Inteligencia Artificial para análisis de sentimiento en opiniones de Steam: Extracción de opiniones, procesado semántico y emisión de veredictos objetivos."
         canonicalPath="/como-funciona"
         keywords={[
-          'Pipeline NLP',
-          'Naive Bayes Steam',
-          'TF-IDF Reseñas',
-          'Análisis de Sentimiento Python',
-          'FastAPI Machine Learning',
-          'Game Recommended Arquitectura',
+          'Análisis de opiniones',
+          'Veredicto Steam',
+          'Opiniones en español',
+          'Inteligencia Artificial videojuegos',
+          'Recomendaciones de juegos',
         ]}
         jsonLd={[breadcrumbLd, faqLd]}
       />
 
-      <div className="w-full max-w-3xl mx-auto space-y-10 animate-fade-up py-6 sm:py-10">
+      <div className="w-full max-w-4xl mx-auto space-y-10 animate-fade-up py-4 sm:py-8">
         {/* HERO HEADER */}
-        <section className="relative py-10 px-6 sm:px-10 rounded-3xl text-center space-y-4 overflow-hidden border border-line bg-surface/50 shadow-xl">
+        <section className="relative py-10 px-6 sm:px-10 rounded-3xl text-center space-y-4 overflow-hidden border border-line bg-surface/60 shadow-xl backdrop-blur-xl">
           <div aria-hidden="true" className="hero-light" />
 
-          <div className="relative inline-flex items-center gap-2 bg-surface border border-line text-accent text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm">
+          <div className="relative inline-flex items-center gap-2 bg-surface border border-line text-accent text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
             <Cpu className="size-4 text-accent animate-pulse" />
-            <span>Arquitectura & Pipeline Técnico</span>
+            <span>Transparencia en el Proceso de Análisis</span>
           </div>
 
-          <h1 className="relative text-3xl sm:text-5xl font-display font-black tracking-tight text-ink">
+          <h1 className="relative text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-ink">
             ¿Cómo Funciona el <span className="text-gradient">Motor de Análisis</span>?
           </h1>
-          <p className="relative text-sm sm:text-base text-ink-soft max-w-lg mx-auto leading-relaxed font-normal">
-            Proceso transparente desde que introduces el título hasta la emisión del veredicto con Inteligencia Artificial.
+          <p className="relative text-sm sm:text-base text-ink-soft max-w-lg mx-auto leading-relaxed font-normal measure">
+            Transparencia paso a paso desde que buscas un título hasta la emisión del informe y el veredicto final.
           </p>
         </section>
+
+        {/* PIPELINE OVERVIEW BADGES */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="tactical-card p-3 text-center space-y-1">
+            <span className="text-xs font-mono text-accent font-bold">01. Búsqueda</span>
+            <p className="text-[11px] text-ink-soft">Catálogo de Steam</p>
+          </div>
+          <div className="tactical-card p-3 text-center space-y-1">
+            <span className="text-xs font-mono text-positive font-bold">02. Limpieza</span>
+            <p className="text-[11px] text-ink-soft">Filtro de Ruido y Spam</p>
+          </div>
+          <div className="tactical-card p-3 text-center space-y-1">
+            <span className="text-xs font-mono text-accent-2 font-bold">03. Sentimiento</span>
+            <p className="text-[11px] text-ink-soft">Semántica en Español</p>
+          </div>
+          <div className="tactical-card p-3 text-center space-y-1">
+            <span className="text-xs font-mono text-warn font-bold">04. Veredicto</span>
+            <p className="text-[11px] text-ink-soft">Informe y Puntos Clave</p>
+          </div>
+        </div>
 
         {/* TIMELINE DE PASOS TÉCNICOS */}
         <section className="space-y-4 relative">
           {steps.map((step) => (
             <div
               key={step.num}
-              className="tactical-card p-5 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start transition-all hover:border-accent/50 shadow-md group"
+              className="tactical-card p-5 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-5 items-start transition-all hover:border-accent/60 shadow-md group"
             >
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <div className="w-12 h-12 rounded-2xl bg-surface-2 border border-line flex items-center justify-center shrink-0 shadow-inner group-hover:border-accent/40 transition-colors">
                   {step.icon}
                 </div>
                 <span className="sm:hidden text-xs font-mono font-bold text-accent">
-                  Paso {step.num}
+                  Fase {step.num}
                 </span>
               </div>
 
@@ -150,7 +177,7 @@ export default function HowItWorks() {
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <h3 className="text-sm sm:text-base font-display font-bold text-ink flex items-center gap-2">
                     <span className="hidden sm:inline-block font-mono text-accent text-xs font-bold bg-accent/15 px-2 py-0.5 rounded-md border border-accent/30">
-                      {step.num}
+                      Fase {step.num}
                     </span>
                     <span>{step.title}</span>
                   </h3>
@@ -172,16 +199,16 @@ export default function HowItWorks() {
           <div className="flex items-center justify-center gap-2">
             <Zap className="size-5 text-accent" />
             <h4 className="text-sm font-display font-bold text-ink uppercase tracking-wider">
-              La Diferencia del Análisis Semántico NLP
+              La Ventaja del Análisis de Contenido Real
             </h4>
           </div>
           <p className="text-xs sm:text-sm text-ink-soft max-w-xl mx-auto leading-relaxed font-normal">
-            A diferencia de la puntuación nativa de Steam (un simple voto binario de me gusta/no me gusta), nuestro modelo examina <strong className="text-ink font-semibold">el contenido léxico real de las reseñas en español</strong> para clasificar el sentimiento veraz detrás de cada opinión.
+            Steam computa únicamente si el usuario pulsó pulgar arriba o abajo. Nuestro sistema analiza <strong className="text-ink font-semibold">el contenido escrito real en español</strong> para detectar matices críticos, quejas de optimización y sarcasmos que alteran la realidad.
           </p>
         </section>
 
-        {/* SECCIÓN FAQ */}
-        <section className="space-y-5 pt-4 border-t border-line">
+        {/* SECCIÓN FAQ INTERACTIVA */}
+        <section className="space-y-4 pt-4 border-t border-line">
           <div className="flex items-center gap-2 justify-center">
             <HelpCircle className="size-5 text-accent" />
             <h3 className="text-sm sm:text-base font-display font-bold text-ink uppercase tracking-wider">
@@ -190,17 +217,37 @@ export default function HowItWorks() {
           </div>
 
           <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="tactical-card p-5 sm:p-6 space-y-2 shadow-sm">
-                <h4 className="text-xs sm:text-sm font-display font-bold text-ink flex items-start sm:items-center gap-2.5">
-                  <CheckCircle2 className="size-4 text-accent shrink-0 mt-0.5 sm:mt-0" />
-                  <span>{faq.question}</span>
-                </h4>
-                <p className="text-xs sm:text-sm text-ink-soft leading-relaxed pl-6 font-normal">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
+            {faqs.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div
+                  key={index}
+                  className="tactical-card overflow-hidden shadow-sm transition-all"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleFaq(index)}
+                    className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer hover:bg-surface-2/50 transition-colors gap-3"
+                  >
+                    <span className="text-xs sm:text-sm font-display font-bold text-ink flex items-center gap-2.5">
+                      <CheckCircle2 className="size-4 text-accent shrink-0" />
+                      <span>{faq.question}</span>
+                    </span>
+                    <ChevronDown
+                      className={`size-4 text-ink-faint transition-transform duration-200 shrink-0 ${
+                        isOpen ? 'rotate-180 text-accent' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 pt-1 text-xs sm:text-sm text-ink-soft leading-relaxed border-t border-line/40 bg-surface-2/30 animate-fade-in pl-11">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -215,13 +262,13 @@ export default function HowItWorks() {
 
           <div className="space-y-3 text-xs sm:text-sm text-ink-soft leading-relaxed font-normal">
             <p>
-              <strong className="text-ink font-semibold">1. Ausencia de Tratamiento de Datos Personales:</strong> Este servicio opera como una herramienta de consulta analítica. No recopilamos, almacenamos ni compartimos datos personales de los usuarios.
+              <strong className="text-ink font-semibold">1. Ausencia de Tratamiento de Datos Personales:</strong> Este servicio opera como una herramienta de consulta pública. No se almacenan datos privados, direcciones IP de consulta persistente ni perfiles de usuario.
             </p>
             <p>
-              <strong className="text-ink font-semibold">2. Enlaces de Afiliación (LSSI-CE Art. 20):</strong> Los enlaces hacia Instant Gaming y G2A contienen parámetros de afiliación que ayudan al mantenimiento de los servidores sin suponer ningún coste extra para el usuario.
+              <strong className="text-ink font-semibold">2. Enlaces de Afiliación (LSSI-CE Art. 20):</strong> Los enlaces hacia Instant Gaming y G2A contienen parámetros de afiliación que ayudan a sostener los costes del servicio sin repercutir ningún sobreprecio al usuario.
             </p>
             <p>
-              <strong className="text-ink font-semibold">3. Estimaciones Automatizadas:</strong> Las valoraciones y resúmenes son estimaciones predictivas calculadas por algoritmos NLP sobre opiniones públicas de la API de Steam.
+              <strong className="text-ink font-semibold">3. Estimaciones Automatizadas:</strong> Las valoraciones e inferencias son estimaciones objetivas calculadas a partir de opiniones públicas de jugadores en Steam.
             </p>
           </div>
         </section>

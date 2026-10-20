@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════ */
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -13,7 +13,7 @@
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.97); }
+  from { opacity: 0; transform: scale(0.96); }
   to   { opacity: 1; transform: scale(1); }
 }
 
@@ -24,22 +24,23 @@
 
 @keyframes pulseGlow {
   0%, 100% {
-    opacity: 0.6;
+    opacity: 0.5;
     transform: scale(1);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.05);
+    opacity: 0.9;
+    transform: scale(1.04);
   }
 }
 
 @keyframes radarSweep {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -47,103 +48,114 @@
    ═══════════════════════════════════════════════════════ */
 
 .animate-fade-up {
-  animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Entrada orquestada única del hero: sube una vez, el resto responde a acciones */
 .hero-enter {
-  animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-enter > *:nth-child(2) { animation-delay: 0.06s; }
-.hero-enter > *:nth-child(3) { animation-delay: 0.12s; }
+.hero-enter > *:nth-child(2) { animation-delay: 0.05s; }
+.hero-enter > *:nth-child(3) { animation-delay: 0.1s; }
 
 .animate-fade-in {
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeIn 0.25s ease forwards;
 }
 
 .animate-scale-in {
   animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--surface-2) 0%,
-    var(--line) 50%,
-    var(--surface-2) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.6s linear infinite;
-}
-
 .animate-radar {
   animation: radarSweep 3s linear infinite;
 }
 
-/* Panel principal con profundidad y contraste */
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+/* Luz de ambiente en el hero */
+.hero-light {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 350px;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.18), transparent 70%);
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.dark .hero-light {
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.14), rgba(129, 140, 248, 0.08) 40%, transparent 70%);
+}
+
+/* Panel táctico principal */
 .tactical-card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-panel);
   box-shadow:
-    0 1px 2px rgba(11, 18, 32, 0.05),
-    0 16px 40px -24px rgba(11, 18, 32, 0.18);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    0 1px 3px rgba(9, 15, 29, 0.05),
+    0 16px 36px -20px rgba(9, 15, 29, 0.14);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .dark .tactical-card {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, transparent), var(--surface));
+  background: linear-gradient(180deg, rgba(14, 21, 36, 0.95), rgba(11, 17, 30, 0.95));
   border-color: var(--line);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.6),
     0 24px 48px -24px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
 }
 
-/* Nivel anidado: callado, radio menor, sin sombra protagonista */
+/* Nivel anidado */
 .tactical-nested {
   background: var(--surface-2);
   border: 1px solid var(--line);
   border-radius: var(--radius-nested);
   box-shadow: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
+.dark .tactical-nested {
+  background: rgba(20, 31, 53, 0.65);
+}
+
+/* Tarjetas interactivas con hover suave y sin salto de layout */
 .tactical-card-interactive {
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tactical-card-interactive:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 
-    0 4px 12px rgba(15, 23, 42, 0.08),
-    0 16px 40px -12px var(--accent-glow);
+    0 8px 24px -6px rgba(15, 23, 42, 0.1),
+    0 0 0 1px var(--accent-glow);
 }
 
 .dark .tactical-card-interactive:hover {
   border-color: var(--accent);
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.6),
-    0 20px 48px -12px var(--accent-glow);
+    0 12px 32px -8px rgba(0, 0, 0, 0.7),
+    0 0 20px -2px var(--accent-glow);
 }
 
-/* Scrollbar interno */
-.custom-scrollbar::-webkit-scrollbar { width: 5px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: var(--surface-2); border-radius: 9999px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 9999px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-.custom-scrollbar { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
-
-/* Feedback al presionar botones tácticos */
+/* Botones tácticos */
 .btn-tactical {
-  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
 .btn-tactical:active {
   transform: scale(0.97);
 }
 
-/* Badges & Chips: sentence case, sin tracking agresivo ni mayúsculas */
+/* Badges tácticos */
 .tactical-badge {
   display: inline-flex;
   align-items: center;
@@ -153,11 +165,10 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.01em;
-  text-transform: none;
   border-width: 1px;
 }
 
-/* Soporte estricto para accesibilidad: prefers-reduced-motion */
+/* Accesibilidad: reductor de movimiento */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

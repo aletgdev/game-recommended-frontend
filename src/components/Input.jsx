@@ -7,8 +7,18 @@ import {
   ArrowRight,
   Loader2,
   CornerDownLeft,
+  Sparkles,
+  Flame,
 } from 'lucide-react';
 import { searchGames } from '../services/steamService';
+
+const QUICK_TAGS = [
+  { name: 'Elden Ring', id: '1245620' },
+  { name: 'Cyberpunk 2077', id: '1091500' },
+  { name: 'Hollow Knight', id: '367520' },
+  { name: 'Hades', id: '1145360' },
+  { name: 'Stardew Valley', id: '413150' },
+];
 
 const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
   const [query, setQuery] = useState('');
@@ -105,7 +115,7 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
       } else if (suggestions.length > 0) {
         handleSelectSuggestion(suggestions[0]);
       } else {
-        setInputError('Selecciona un juego de las sugerencias, o introduce un ID o URL de Steam directamente.');
+        setInputError('Selecciona un juego de la lista, o escribe el AppID/URL directa de Steam.');
         setTimeout(() => setInputError(''), 4000);
       }
     }
@@ -155,16 +165,16 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
 
   return (
     <div ref={containerRef} className="w-full relative">
-      {/* Formulario Estilo Command Palette / HUD */}
+      {/* Formulario Estilo Consola HUD Gamer */}
       <form
         onSubmit={handleSubmit}
         className={`relative z-10 w-full bg-surface border p-2 sm:p-2.5 rounded-2xl flex flex-col sm:flex-row items-stretch sm:items-center gap-2 transition-all duration-300 shadow-xl ${
           isFocused
-            ? 'border-accent glow-focus shadow-accent/15'
+            ? 'border-accent shadow-[0_0_24px_rgba(56,189,248,0.2)] dark:shadow-[0_0_30px_rgba(56,189,248,0.18)] ring-1 ring-accent'
             : 'border-line hover:border-line-strong'
         }`}
       >
-        <div className="flex items-center flex-1 min-w-0 gap-2.5 pl-1.5">
+        <div className="flex items-center flex-1 min-w-0 gap-2.5 pl-2">
           {/* Icono Lupa */}
           <div className={`shrink-0 transition-colors duration-200 ${isFocused ? 'text-accent' : 'text-ink-faint'}`}>
             <Search className="size-5" />
@@ -213,7 +223,7 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
               setIsFocused(true);
             }}
             onKeyDown={handleKeyDown}
-            placeholder="Escribe un juego, un AppID o pega la URL de Steam…"
+            placeholder="Escribe un título de Steam (ej. Elden Ring, Hollow Knight) o pega URL..."
             className="flex-1 bg-transparent px-1 py-2 text-sm sm:text-base text-ink placeholder:text-ink-faint outline-none w-full min-w-0 font-medium"
             aria-autocomplete="list"
             aria-haspopup="listbox"
@@ -255,7 +265,7 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
         <button
           type="submit"
           disabled={isLoading || !query.trim()}
-          className="bg-accent hover:brightness-110 disabled:bg-surface-2 disabled:text-ink-faint disabled:border-line disabled:cursor-not-allowed text-white text-sm font-semibold px-5 sm:px-6 py-3 min-h-[44px] rounded-xl transition-all shadow-md shadow-accent/25 cursor-pointer shrink-0 flex items-center justify-center gap-2 active:scale-95"
+          className="bg-accent hover:brightness-110 disabled:bg-surface-2 disabled:text-ink-faint disabled:border-line disabled:cursor-not-allowed text-white text-sm font-bold px-5 sm:px-6 py-2.5 sm:py-3 min-h-[44px] rounded-xl transition-all shadow-md shadow-accent/25 cursor-pointer shrink-0 flex items-center justify-center gap-2 active:scale-95"
         >
           {isLoading ? (
             <>
@@ -270,6 +280,24 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
           )}
         </button>
       </form>
+
+      {/* Quick Launch Chips */}
+      <div className="flex flex-wrap items-center gap-1.5 mt-2.5 px-1 text-xs text-ink-faint">
+        <span className="font-semibold text-ink-soft flex items-center gap-1 shrink-0">
+          <Flame className="size-3.5 text-accent" />
+          <span>Tendencias:</span>
+        </span>
+        {QUICK_TAGS.map((game) => (
+          <button
+            key={game.id}
+            type="button"
+            onClick={() => onGameSelect(game)}
+            className="px-2.5 py-1 rounded-lg bg-surface hover:bg-surface-2 border border-line hover:border-accent text-ink-soft hover:text-ink text-[11px] font-medium transition-all cursor-pointer shadow-sm active:scale-95"
+          >
+            {game.name}
+          </button>
+        ))}
+      </div>
 
       {/* Mensaje de Error Inline */}
       {inputError && (
@@ -288,11 +316,11 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
           <div className="px-4 py-2.5 border-b border-line flex items-center justify-between bg-surface-2/80">
             <span className="text-xs font-semibold text-ink-soft flex items-center gap-1.5">
               <Gamepad2 className="size-3.5 text-accent" />
-              <span>Coincidencias en Steam</span>
+              <span>Coincidencias en la base de datos de Steam</span>
             </span>
             <div className="flex items-center gap-3">
               {suggestions.length > 0 && (
-                <span className="text-xs text-ink-faint bg-surface border border-line px-2 py-0.5 rounded-md">
+                <span className="text-xs text-ink-faint bg-surface border border-line px-2 py-0.5 rounded-md font-mono">
                   {suggestions.length} resultados
                 </span>
               )}
@@ -337,7 +365,7 @@ const GameSearch = memo(function GameSearch({ onGameSelect, isLoading }) {
                       <h4 className="text-sm font-semibold text-ink group-hover:text-accent transition-colors truncate">
                         {game.name}
                       </h4>
-                      <span className="code-datum text-ink-faint">{game.id}</span>
+                      <span className="code-datum text-ink-faint">AppID: {game.id}</span>
                     </div>
                   </div>
 

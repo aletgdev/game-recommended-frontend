@@ -1,1 +1,1 @@
-export const LATEST_CHANGELOG_VERSION = '2.2.0';
+export const LATEST_CHANGELOG_VERSION = '2.4.0';

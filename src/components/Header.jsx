@@ -123,7 +123,7 @@ export default function Header() {
       key: 'home',
       label: 'Analizar',
       path: '/',
-      description: 'Busca y analiza opiniones de Steam',
+      description: 'Telemetría y análisis semántico de títulos en Steam',
       icon: <Search className="size-4 shrink-0" />,
     },
     {
@@ -131,28 +131,28 @@ export default function Header() {
       label: 'Recomendador',
       path: '/recomendar',
       isBeta: true,
-      description: 'Describe lo que te apetece y encuentra juegos',
+      description: 'Asistente IA para descubrir juegos según tus gustos',
       icon: <Sparkles className="size-4 shrink-0" />,
     },
     {
       key: 'how-it-works',
       label: 'Cómo funciona',
       path: '/como-funciona',
-      description: 'Cómo leemos y clasificamos reseñas',
+      description: 'Cómo analizamos y clasificamos las opiniones de la comunidad',
       icon: <Cpu className="size-4 shrink-0" />,
     },
     {
       key: 'changelog',
       label: 'Novedades',
       path: '/changelog',
-      description: 'Qué ha cambiado últimamente',
+      description: 'Historial de versiones y mejoras del sistema',
       icon: <History className="size-4 shrink-0" />,
     },
     {
       key: 'status',
       label: 'Estado',
       path: '/estado',
-      description: 'Si el servicio responde bien',
+      description: 'Disponibilidad del servicio y velocidad de respuesta',
       icon: <Activity className="size-4 shrink-0" />,
     },
   ];
@@ -160,14 +160,14 @@ export default function Header() {
   return (
     <header
       ref={menuRef}
-      className={`w-full sticky top-0 z-50 transition-all duration-300 ${
+      className={`w-full sticky top-0 z-50 transition-all duration-300 border-b ${
         scrolled || mobileMenuOpen
-          ? 'bg-surface/85 backdrop-blur-xl border-b border-line shadow-md py-2.5'
-          : 'bg-bg/60 backdrop-blur-md border-b border-line/40 py-3.5'
+          ? 'bg-surface/90 backdrop-blur-2xl border-line shadow-lg shadow-black/5 dark:shadow-black/30 py-2.5'
+          : 'bg-surface/80 backdrop-blur-xl border-line/60 py-3'
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
-        {/* LOGO MARCA */}
+        {/* BRAND LOGO */}
         <button
           onClick={() => {
             navigate('/');
@@ -176,18 +176,28 @@ export default function Header() {
           className="flex items-center gap-2.5 cursor-pointer bg-transparent border-0 p-1 text-left outline-none group shrink-0 rounded-xl"
           aria-label="Ir al inicio de Game Recommended AI"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-accent to-accent-2 flex items-center justify-center text-white shadow-md shadow-accent/25 group-hover:scale-105 transition-transform">
-            <Gamepad2 className="size-4" />
+          <div className="relative w-8 h-8 rounded-xl bg-gradient-to-tr from-accent to-accent-2 flex items-center justify-center text-white shadow-md shadow-accent/25 group-hover:scale-105 transition-all">
+            <Gamepad2 className="size-4.5" />
+            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-positive border-2 border-surface animate-pulse" />
           </div>
-          <span className="text-sm sm:text-base font-display font-extrabold tracking-tight text-ink group-hover:text-accent transition-colors flex items-center gap-1.5">
-            <span>Game Recommended</span>
-            <span className="text-xs font-semibold bg-accent/10 text-accent border border-accent/25 px-1.5 py-0.5 rounded-md">IA</span>
-          </span>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1.5">
+              <span className="text-sm sm:text-base font-display font-extrabold tracking-tight text-ink group-hover:text-accent transition-colors">
+                Game Recommended
+              </span>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-accent/15 text-accent border border-accent/30 px-1.5 py-0.2 rounded-md">
+                IA
+              </span>
+            </div>
+            <span className="text-[10px] text-ink-faint hidden sm:inline -mt-0.5 font-medium">
+              Radar de Steam en español
+            </span>
+          </div>
         </button>
 
-        {/* NAVEGACIÓN DESKTOP SEGMENTADA */}
+        {/* DESKTOP NAVIGATION PILLS */}
         <nav
-          className="hidden md:flex items-center gap-1 bg-surface-2/90 border border-line rounded-xl p-1 shrink-0 mx-auto shadow-sm backdrop-blur-sm"
+          className="hidden md:flex items-center gap-1 bg-surface-2/80 border border-line rounded-xl p-1 shrink-0 mx-auto shadow-inner backdrop-blur-sm"
           aria-label="Navegación principal"
         >
           {navItems.map(({ key, label, path, isBeta, icon }) => {
@@ -198,23 +208,23 @@ export default function Header() {
                 key={key}
                 type="button"
                 onClick={() => handleNavClick(path, key)}
-                className={`relative px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer outline-none flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                className={`relative px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer outline-none flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'bg-accent text-white shadow-md shadow-accent/25'
-                    : 'text-ink-soft hover:text-ink hover:bg-surface'
+                    ? 'bg-accent text-white shadow-md shadow-accent/30 font-bold'
+                    : 'text-ink-soft hover:text-ink hover:bg-surface/80'
                 }`}
               >
                 <span className={isActive ? 'text-white' : 'text-ink-faint'}>{icon}</span>
                 <span>{label}</span>
                 {isBeta && (
-                  <span className={`text-[11px] font-semibold px-1.5 py-0.5 rounded-md ${
-                    isActive ? 'bg-white/20 text-white' : 'bg-positive/10 text-positive border border-positive/25'
+                  <span className={`text-[10px] font-bold uppercase px-1.5 py-0.2 rounded-md ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-positive/15 text-positive border border-positive/30'
                   }`}>
                     Beta
                   </span>
                 )}
                 {isChangelogUnread && (
-                  <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded-md bg-accent/10 text-accent border border-accent/25 animate-pulse">
+                  <span className="text-[10px] font-bold uppercase px-1.5 py-0.2 rounded-md bg-accent/15 text-accent border border-accent/30 animate-pulse">
                     Nuevo
                   </span>
                 )}
@@ -223,13 +233,13 @@ export default function Header() {
           })}
         </nav>
 
-        {/* ACCIONES DESKTOP DERECHA */}
+        {/* RIGHT ACTIONS */}
         <div className="flex items-center gap-2 shrink-0">
-          {/* Toggle de tema */}
+          {/* Dark/Light mode toggle */}
           <button
             type="button"
             onClick={toggleTheme}
-            className="hidden sm:inline-flex items-center justify-center p-2 min-w-[38px] min-h-[38px] rounded-xl border border-line bg-surface hover:bg-surface-2 text-ink-soft hover:text-ink transition-all cursor-pointer shrink-0 shadow-sm"
+            className="inline-flex items-center justify-center p-2 min-w-[38px] min-h-[38px] rounded-xl border border-line bg-surface hover:bg-surface-2 text-ink-soft hover:text-ink transition-all cursor-pointer shrink-0 shadow-sm"
             aria-label="Cambiar tema claro/oscuro"
             title={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
           >
@@ -240,23 +250,24 @@ export default function Header() {
             )}
           </button>
 
-          {/* Link GitHub */}
+          {/* GitHub Link */}
           <a
             href="https://github.com/aletgdev"
             target="_blank"
             rel="noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 border border-line bg-surface hover:bg-surface-2 px-3 py-1.5 min-h-[38px] rounded-xl text-xs font-semibold text-ink-soft hover:text-ink transition-all shrink-0 shadow-sm"
+            className="hidden sm:inline-flex items-center justify-center p-2 min-w-[38px] min-h-[38px] rounded-xl border border-line bg-surface hover:bg-surface-2 text-ink-soft hover:text-ink transition-all shrink-0 shadow-sm"
             aria-label="Ver perfil y repositorios en GitHub"
+            title="Ver perfil en GitHub"
           >
-            <GithubIcon className="size-4 text-ink-soft shrink-0" />
-            <span className="hidden lg:inline">GitHub</span>
+            <GithubIcon className="size-4 shrink-0" />
+            <span className="hidden xl:inline text-xs font-semibold pl-1.5">GitHub</span>
           </a>
 
-          {/* Botón Menú Móvil */}
+          {/* Mobile menu trigger */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="md:hidden flex items-center justify-center p-2.5 min-h-[44px] min-w-[44px] rounded-xl border border-line bg-surface text-ink-soft cursor-pointer shadow-sm active:scale-95"
+            className="md:hidden flex items-center justify-center p-2.5 min-h-[38px] min-w-[38px] rounded-xl border border-line bg-surface text-ink-soft cursor-pointer shadow-sm active:scale-95"
             aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={mobileMenuOpen}
           >
@@ -269,14 +280,14 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MENÚ MÓVIL DESPLEGABLE CON ANIMACIÓN FLUIDA */}
+      {/* MOBILE MENU ACCORDION */}
       {mobileMenuOpen && (
-        <div className="md:hidden w-full border-t border-line bg-surface px-4 py-4 space-y-3 shadow-2xl animate-fade-up">
-          <div className="flex items-center gap-2">
+        <div className="md:hidden border-t border-line bg-surface/95 backdrop-blur-2xl px-4 py-3 space-y-2 animate-fade-up">
+          <div className="flex items-center gap-2 pb-1">
             <button
               type="button"
               onClick={toggleTheme}
-              className="flex-1 flex items-center justify-center gap-2 p-2.5 min-h-[44px] rounded-xl border border-line bg-surface-2 text-ink-soft hover:text-ink font-bold text-xs cursor-pointer"
+              className="flex-1 flex items-center justify-center gap-2 p-2.5 min-h-[40px] rounded-xl border border-line bg-surface-2 text-ink-soft hover:text-ink font-bold text-xs cursor-pointer"
               aria-label="Cambiar tema"
             >
               {isDark ? <Sun className="size-4 text-warn" /> : <Moon className="size-4 text-accent" />}
@@ -287,14 +298,14 @@ export default function Header() {
               href="https://github.com/aletgdev"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-center gap-2 p-2.5 min-h-[44px] px-4 rounded-xl border border-line bg-surface-2 text-ink-soft hover:text-ink font-bold text-xs"
+              className="flex items-center justify-center gap-2 p-2.5 min-h-[40px] px-4 rounded-xl border border-line bg-surface-2 text-ink-soft hover:text-ink font-bold text-xs"
             >
               <GithubIcon className="size-4" />
               <span>GitHub</span>
             </a>
           </div>
 
-          <div className="space-y-1.5 pt-1">
+          <div className="space-y-1">
             {navItems.map(({ key, label, path, isBeta, description, icon }) => {
               const isActive = activePage === key;
               return (
@@ -302,10 +313,10 @@ export default function Header() {
                   key={key}
                   type="button"
                   onClick={() => handleNavClick(path, key)}
-                  className={`w-full flex items-center justify-between p-3 min-h-[48px] rounded-xl text-left transition-colors cursor-pointer ${
+                  className={`w-full flex items-center justify-between p-3 min-h-[44px] rounded-xl text-left transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-accent text-white shadow-md shadow-accent/20'
-                      : 'bg-surface-2 hover:bg-surface-3 text-ink'
+                      : 'bg-surface-2/60 hover:bg-surface-2 text-ink'
                   }`}
                 >
                   <div className="flex items-center gap-3">

@@ -19,7 +19,7 @@ export const SITE_KEYWORDS = [
   'Recomendador de Videojuegos',
   'Juegos PC',
   'Game Recommended',
-  'FastAPI NLP',
+  'IA de Videojuegos',
   'Steam API'
 ];
 

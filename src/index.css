@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 @import "tailwindcss";
 
 /* Theme variant: `.dark` class on <html> */
@@ -21,53 +21,52 @@
   --color-warn: var(--warn);
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Chakra Petch', 'Inter', sans-serif;
+  --font-display: 'Chakra Petch', 'Space Grotesk', 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
 /* ── Semantic Design Tokens (WCAG AA Compliant) ─────────────────────
-   Identidad: laboratorio nocturno de Steam en español.
-   Base abisal + niebla Steam (#C7D5E0) + señal Steam (#66C0F4) solo para
-   interacción. Verde/rojo reservados a veredictos, nunca decoración. */
+   Identidad: Estación de inteligencia gamer de Steam de alto impacto.
+   Base abisal profunda + acentos cian/violeta + verde esmeralda y carmesí tácticos. */
 
 :root {
-  --bg: #f6f8fb;
+  --bg: #f5f8fc;
   --surface: #ffffff;
-  --surface-2: #eef2f7;
-  --surface-3: #e0e8f2;
-  --line: #dfe7f1;
-  --line-strong: #bccadd;
-  --ink: #0b1220;
-  --ink-soft: #3d4c63;
-  --ink-faint: #6b7a93;
-  --accent: #1d5fd1;
-  --accent-2: #0277b6;
-  --accent-glow: rgba(29, 95, 209, 0.18);
-  --positive: #067647;
-  --positive-glow: rgba(6, 118, 71, 0.18);
-  --negative: #c81e4a;
-  --negative-glow: rgba(200, 30, 74, 0.18);
-  --warn: #b45309;
-  --warn-glow: rgba(180, 83, 9, 0.18);
+  --surface-2: #edf2f9;
+  --surface-3: #e2eaf5;
+  --line: #d8e3f0;
+  --line-strong: #b5c7dd;
+  --ink: #090f1d;
+  --ink-soft: #33435c;
+  --ink-faint: #60738e;
+  --accent: #2563eb;
+  --accent-2: #0284c7;
+  --accent-glow: rgba(37, 99, 235, 0.16);
+  --positive: #059669;
+  --positive-glow: rgba(5, 150, 105, 0.16);
+  --negative: #dc2626;
+  --negative-glow: rgba(220, 38, 38, 0.16);
+  --warn: #d97706;
+  --warn-glow: rgba(217, 119, 6, 0.16);
 
-  --radius-panel: 20px;
-  --radius-nested: 14px;
+  --radius-panel: 22px;
+  --radius-nested: 15px;
   --measure: 68ch;
 }
 
 .dark {
-  --bg: #070b14;
-  --surface: #0e1626;
-  --surface-2: #131e32;
-  --surface-3: #1a2942;
-  --line: #1e2c44;
-  --line-strong: #2c3e5c;
-  --ink: #edf2f7;
-  --ink-soft: #c7d5e0;
-  --ink-faint: #8f9bb0;
-  --accent: #4f9cf0;
-  --accent-2: #66c0f4;
-  --accent-glow: rgba(102, 192, 244, 0.22);
+  --bg: #070b13;
+  --surface: #0e1524;
+  --surface-2: #141f35;
+  --surface-3: #1a2944;
+  --line: #1c2b45;
+  --line-strong: #2c3f61;
+  --ink: #f1f5f9;
+  --ink-soft: #cbd5e1;
+  --ink-faint: #94a3b8;
+  --accent: #38bdf8;
+  --accent-2: #818cf8;
+  --accent-glow: rgba(56, 189, 248, 0.22);
   --positive: #34d399;
   --positive-glow: rgba(52, 211, 153, 0.22);
   --negative: #fb7185;
@@ -86,9 +85,9 @@ html {
 body {
   background-color: var(--bg);
   background-image: 
-    radial-gradient(circle, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
-    linear-gradient(to right, rgba(15, 23, 42, 0.015) 1px, transparent 1px);
-  background-size: 32px 32px, 96px 96px;
+    radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+    radial-gradient(circle, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 100% 800px, 28px 28px;
   color: var(--ink);
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -98,26 +97,29 @@ body {
 
 .dark body {
   background-image: 
-    radial-gradient(circle, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(to right, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+    radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 85% 20%, rgba(129, 140, 248, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 15% 45%, rgba(52, 211, 153, 0.05) 0%, transparent 45%),
+    radial-gradient(circle, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 100% 700px, 800px 800px, 800px 800px, 32px 32px;
 }
 
-/* Grano cinemático sutil */
+/* Grano cinemático sutil de fondo */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .dark body::before {
   opacity: 0.035;
 }
 
-/* Tipografía jerarquizada y balanceada */
+/* Tipografía editorial */
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
   letter-spacing: -0.02em;
@@ -127,54 +129,30 @@ p {
   text-wrap: pretty;
 }
 
-/* Medida de lectura: evita líneas >68ch en cuerpo */
 .measure {
   max-width: var(--measure);
 }
 
-/* Titular editorial: tinta sólida + subrayado señal, sin acentuar una palabra */
-.headline-mark {
-  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 32%, transparent) 62%);
-  padding-inline: 0.08em;
-}
-
-/* Etiqueta tranquila en sentence case (sustituye al eyebrow en mayúsculas) */
-.label-calm {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-transform: none;
-  color: var(--ink-soft);
-}
-
-/* Mono solo para dato real de código, nunca para etiquetas UI */
 .code-datum {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0;
-  text-transform: none;
 }
 
-/* Optimización de rendimiento para renderizado de listas de reseñas */
-.review-item {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 100px;
-}
-
-/* Enfoque accesible sin degradar el diseño */
+/* Focus accesible */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* Scrollbars minimalistas tácticos */
+/* Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--surface);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -186,7 +164,6 @@ p {
   background: var(--accent);
 }
 
-/* Scrollbar oculto */
 .scrollbar-none {
   scrollbar-width: none;
 }
@@ -194,82 +171,21 @@ p {
   display: none;
 }
 
-/* ── Identidad Visual & Gradients ───────────────────────────────── */
-
+/* Gradientes de texto */
 .text-gradient {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 60%, var(--positive) 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--positive) 100%);
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
-.dark .text-gradient {
-  background: linear-gradient(135deg, #93c5fd 0%, var(--accent-2) 55%, #5eead4 100%);
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
-.text-gradient-purple {
-  background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Luz de héroe ambiental con doble foco cyberpunk */
-.hero-light {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 900px;
-  max-width: 95vw;
-  height: 480px;
-  border-radius: 9999px;
-  background: radial-gradient(
-    ellipse at center,
-    color-mix(in srgb, var(--accent) 12%, transparent) 0%,
-    color-mix(in srgb, var(--accent-2) 6%, transparent) 40%,
-    transparent 70%
-  );
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.dark .hero-light {
-  background: radial-gradient(
-    ellipse at center,
-    color-mix(in srgb, var(--accent) 18%, transparent) 0%,
-    color-mix(in srgb, var(--accent-2) 10%, transparent) 40%,
-    transparent 70%
-  );
-}
-
-/* Resplandor focal para buscador y comandos */
-.glow-focus {
-  box-shadow: 0 0 0 1px var(--accent), 0 0 32px -4px var(--accent-glow);
-}
-
-/* Estilo HUD Táctico */
-.hud-border {
-  position: relative;
-}
-
-.hud-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--line-strong), transparent 60%, var(--line));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-.dark .hud-border::before {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), transparent 60%, rgba(255, 255, 255, 0.05));
+  -webkit-text-fill-color: transparent;
 }
