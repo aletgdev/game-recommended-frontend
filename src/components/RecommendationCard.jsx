@@ -272,7 +272,7 @@ const RecommendationCard = memo(function RecommendationCard({ result, gameInfo }
               }`}
             >
               <Cpu className="size-4 text-accent shrink-0" />
-              <span>Síntesis Inteligente Groq AI</span>
+              <span>Resumen de la Comunidad</span>
             </button>
           </div>
 
@@ -321,7 +321,7 @@ const RecommendationCard = memo(function RecommendationCard({ result, gameInfo }
                 <Cpu className="size-8 text-accent mx-auto" />
                 <h4 className="text-sm font-display font-bold text-ink">Síntesis IA no disponible</h4>
                 <p className="text-xs text-ink-soft leading-relaxed font-normal">
-                  La síntesis periodística no está disponible en este momento. Asegúrate de tener configurada la API Key de Groq en el servidor backend.
+                  El resumen de la comunidad no está disponible en este momento. Inténtalo de nuevo más tarde.
                 </p>
                 <button
                   type="button"

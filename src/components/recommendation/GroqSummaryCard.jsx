@@ -44,7 +44,7 @@ const GroqSummaryCard = memo(function GroqSummaryCard({ groqSummary, onToggleAna
             <h3 className="text-xs sm:text-sm font-display font-bold text-ink uppercase tracking-wider flex items-center gap-2">
               <span>Síntesis Inteligente de la Comunidad</span>
               <span className="text-[10px] font-mono bg-accent/15 text-accent border border-accent/30 px-2 py-0.5 rounded-full font-bold">
-                Groq AI
+                Resumen IA
               </span>
             </h3>
             <span className="text-[11px] text-ink-faint">

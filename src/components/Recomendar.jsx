@@ -5,7 +5,6 @@ import {
   BrainCircuit,
   Compass,
   Gamepad2,
-  Wheat,
   Swords,
   Rocket,
   Puzzle,
@@ -36,7 +35,7 @@ export default function Recomendar() {
   const resultsTopRef = useRef(null);
 
   const ejemplos = [
-    { text: 'Un juego relajante para tener mi propia granja y plantar hortalizas', label: 'Granja / Relax', Icon: Wheat },
+    { text: 'Un juego relajante para tener mi propia granja y plantar hortalizas', label: 'Granja / Relax', Icon: Sparkles },
     { text: 'Un RPG de fantasía con combates por turnos y una historia profunda', label: 'RPG / Fantasía', Icon: Swords },
     { text: 'Un shooter cooperativo espacial con mucha acción para jugar con amigos', label: 'Acción / Co-op', Icon: Rocket },
     { text: 'Un juego de puzles y misterio con una gran banda sonora atmosférica', label: 'Puzles / Misterio', Icon: Puzzle },
@@ -66,7 +65,7 @@ export default function Recomendar() {
     } catch (err) {
       if (err.name === 'AbortError') return;
       console.error('Error al obtener recomendación RAG:', err);
-      setError(err.message || 'Error al conectar con el servidor RAG.');
+      setError(err.message || 'Error al conectar con el servidor de recomendaciones.');
     } finally {
       setIsLoading(false);
     }
@@ -102,34 +101,34 @@ export default function Recomendar() {
     <>
       <SeoHead
         title="Recomendador de Videojuegos por IA"
-        description="Encuentra videojuegos en Steam según tu estado de ánimo o preferencia por lenguaje natural. Motor RAG conversacional impulsado por LLM y NLP."
+        description="Encuentra videojuegos en Steam según tu estado de ánimo o preferencias. Recomendador inteligente impulsado por Inteligencia Artificial."
         canonicalPath="/recomendar"
         keywords={[
           'Recomendador de Videojuegos',
           'IA Steam',
-          'RAG Juegos PC',
-          'Búsqueda Semántica Videojuegos',
+          'Juegos Recomendados PC',
+          'Búsqueda de Videojuegos',
           'Juegos por Estado de Ánimo',
-          'Groq LLM',
+          'Asistente de Juegos',
         ]}
         jsonLd={breadcrumbLd}
       />
 
-      <div className="py-8 sm:py-12 animate-fade-in space-y-10">
+      <div className="py-6 sm:py-10 animate-fade-in space-y-8">
         {/* HERO SECTION */}
-        <section className="relative py-10 px-6 sm:px-10 rounded-3xl text-center space-y-4 overflow-hidden border border-line bg-surface/50 shadow-lg">
+        <section className="relative py-8 sm:py-12 px-6 sm:px-10 rounded-3xl text-center space-y-4 overflow-hidden border border-line bg-surface/60 shadow-xl backdrop-blur-xl">
           <div aria-hidden="true" className="hero-light" />
 
-          <div className="relative inline-flex items-center gap-2 bg-surface border border-line text-accent text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm">
-            <Sparkles className="size-4 text-accent animate-pulse" />
-            <span>Búsqueda Semántica por Lenguaje Natural & Groq LLM</span>
+          <div className="relative inline-flex items-center gap-2 bg-surface border border-line text-accent text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
+            <Sparkles className="size-3.5 text-accent animate-pulse" />
+            <span>Búsqueda Inteligente por Sensaciones y Preferencias</span>
           </div>
 
-          <h1 className="relative text-3xl sm:text-5xl font-display font-black tracking-tight text-ink">
+          <h1 className="relative text-3xl sm:text-5xl font-display font-extrabold tracking-tight text-ink">
             Recomendador de Juegos por <span className="text-gradient">IA</span>
           </h1>
-          <p className="relative text-sm sm:text-base text-ink-soft max-w-xl mx-auto leading-relaxed font-normal">
-            Describe qué sensación o ambientación buscas hoy. Nuestra IA vectorizará tu consulta sobre el catálogo de Steam y argumentará cada recomendación.
+          <p className="relative text-sm sm:text-base text-ink-soft max-w-xl mx-auto leading-relaxed font-normal measure">
+            Cuéntanos qué experiencia, atmósfera o mecánica te apetece hoy. Nuestra IA vectorizará tu deseo sobre el catálogo completo de Steam para darte joyas a medida.
           </p>
         </section>
 
@@ -147,7 +146,7 @@ export default function Recomendar() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Ej: Busco un juego para desconectar tras el trabajo, donde pueda construir una granja pacífica o explorar cuevas misteriosas..."
-                className="w-full bg-surface-2 border border-line focus:border-accent rounded-2xl p-4 text-sm text-ink placeholder-ink-faint outline-none transition-all resize-none leading-relaxed shadow-inner glow-focus"
+                className="w-full bg-surface-2 border border-line focus:border-accent focus:ring-1 focus:ring-accent rounded-2xl p-4 text-sm text-ink placeholder-ink-faint outline-none transition-all resize-none leading-relaxed shadow-inner"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -184,7 +183,7 @@ export default function Recomendar() {
               <button
                 type="submit"
                 disabled={isLoading || !query.trim()}
-                className="w-full sm:w-auto bg-accent hover:bg-accent-2 disabled:bg-surface-2 disabled:text-ink-faint disabled:border-line disabled:cursor-not-allowed text-white text-xs font-black px-6 py-3 min-h-[44px] rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0 shadow-lg shadow-accent/25 active:scale-95"
+                className="w-full sm:w-auto bg-accent hover:bg-accent-2 disabled:bg-surface-2 disabled:text-ink-faint disabled:border-line disabled:cursor-not-allowed text-white text-xs font-bold px-6 py-3 min-h-[44px] rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0 shadow-lg shadow-accent/25 active:scale-95"
               >
                 {isLoading ? (
                   <>
@@ -211,7 +210,7 @@ export default function Recomendar() {
                   key={i}
                   type="button"
                   onClick={() => handleEjemploClick(ej.text)}
-                  className="text-xs font-bold text-ink-soft hover:text-ink bg-surface-2 border border-line hover:border-accent hover:bg-surface px-3 py-1.5 rounded-xl transition-all cursor-pointer active:scale-95 shadow-sm flex items-center gap-1.5"
+                  className="text-xs font-semibold text-ink-soft hover:text-ink bg-surface-2 border border-line hover:border-accent hover:bg-surface px-3 py-1.5 rounded-xl transition-all cursor-pointer active:scale-95 shadow-sm flex items-center gap-1.5"
                 >
                   <ej.Icon className="size-3.5 text-accent shrink-0" />
                   <span>{ej.label}</span>
@@ -221,7 +220,7 @@ export default function Recomendar() {
           </form>
 
           {error && (
-            <div className="bg-negative/10 border border-negative/30 p-4 rounded-2xl text-negative text-xs flex gap-3 items-start shadow-md">
+            <div className="bg-negative/10 border border-negative/30 p-4 rounded-2xl text-negative text-xs flex gap-3 items-start shadow-md animate-fade-up">
               <AlertCircle className="size-5 shrink-0 text-negative mt-0.5" />
               <p className="opacity-90 leading-relaxed font-semibold">{error}</p>
             </div>
@@ -234,7 +233,7 @@ export default function Recomendar() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-positive/20 border border-positive/40 flex items-center justify-center shrink-0 text-positive">
-                  <Wheat className="size-5" />
+                  <Gamepad2 className="size-5" />
                 </div>
                 <div>
                   <h3 className="text-sm sm:text-base font-display font-extrabold text-ink flex items-center gap-2 flex-wrap">
@@ -286,8 +285,8 @@ export default function Recomendar() {
               <div className="absolute inset-0 rounded-full border-2 border-accent/20 animate-ping opacity-50" />
               <Loader2 className="size-8 text-accent animate-spin" />
             </div>
-            <p className="text-sm font-display font-bold text-ink">Vectorizando consulta y explorando Steam...</p>
-            <p className="text-xs text-ink-faint">Búsqueda semántica RAG acelerada por Groq Cloud AI</p>
+            <p className="text-sm font-display font-bold text-ink">Explorando el catálogo de Steam...</p>
+            <p className="text-xs text-ink-faint">Identificando títulos que coinciden con tus preferencias</p>
           </div>
         )}
 
