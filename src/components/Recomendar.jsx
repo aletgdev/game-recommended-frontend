@@ -17,8 +17,6 @@ import {
   Loader2,
   AlertCircle,
   ShieldCheck,
-  Target,
-  Sparkle,
 } from 'lucide-react';
 import { getRagRecommendations } from '../services/steamService';
 import { getInstantGamingUrl, getG2aUrl, getSteamStoreUrl } from '../config/affiliates';

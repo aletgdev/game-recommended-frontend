@@ -7,14 +7,9 @@ import {
   Gamepad2,
   ShieldCheck,
   Zap,
-  TrendingUp,
   Award,
   Layers,
-  Search,
-  Activity,
   Bot,
-  Flame,
-  CheckCircle2,
 } from 'lucide-react';
 import './App.css';
 import Header from './components/Header';
@@ -202,11 +197,7 @@ function AppContent() {
                         Profundidad del análisis:
                       </span>
                       <div className="flex items-center gap-1 bg-surface border border-line p-1 rounded-xl shadow-sm" role="radiogroup" aria-label="Reseñas por análisis">
-                        {[
-                          { num: 10, label: '10 (Rápido)' },
-                          { num: 20, label: '20 (Equilibrado)' },
-                          { num: 30, label: '30 (Exhaustivo)' },
-                        ].map(({ num, label }) => (
+                        {[10, 20, 30].map((num) => (
                           <button
                             key={num}
                             type="button"

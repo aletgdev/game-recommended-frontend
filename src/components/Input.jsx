@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Loader2,
   CornerDownLeft,
-  Sparkles,
   Flame,
 } from 'lucide-react';
 import { searchGames } from '../services/steamService';
